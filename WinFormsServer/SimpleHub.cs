@@ -80,17 +80,17 @@ namespace WinFormsServer
 
         internal void BroadcastToAll(string sender, string msg)
         {
-            Clients.All.addMessage(sender, msg);
+            Clients.All.AddMessage(sender, msg);
         }
 
         internal void BroadcastToUser(string userId, string sender, string msg)
         {
-            Clients.Client(userId).addMessage(sender, msg);
+            Clients.Client(userId).AddMessage(sender, msg);
         }
 
         internal void BroadcastToGroup(string groupName, string sender, string msg)
         {
-            Clients.Group(groupName).addMessage(sender, msg);
+            Clients.Group(groupName).AddMessage(sender, msg);
         }
 
         #endregion
