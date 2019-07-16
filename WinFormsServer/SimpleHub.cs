@@ -29,6 +29,7 @@ namespace WinFormsServer
             _users.Clear();
         }
 
+        //Called when a client is connected
         public override Task OnConnected()
         {
             _users.TryAdd(Context.ConnectionId, Context.ConnectionId);
@@ -38,6 +39,7 @@ namespace WinFormsServer
             return base.OnConnected();
         }
 
+        //Called when a client is disconnected
         public override Task OnDisconnected(bool stopCalled)
         {
             string userName;
@@ -73,26 +75,11 @@ namespace WinFormsServer
 
         public void Send(string msg)
         {
-            BroadcastToAll(_users[Context.ConnectionId], msg);
+            Clients.All.addMessage(_users[Context.ConnectionId], msg);
 
             MessageReceived?.Invoke(Context.ConnectionId, msg);
         }
 
-        internal void BroadcastToAll(string sender, string msg)
-        {
-            Clients.All.AddMessage(sender, msg);
-        }
-
-        internal void BroadcastToUser(string userId, string sender, string msg)
-        {
-            Clients.Client(userId).AddMessage(sender, msg);
-        }
-
-        internal void BroadcastToGroup(string groupName, string sender, string msg)
-        {
-            Clients.Group(groupName).AddMessage(sender, msg);
-        }
-
-        #endregion
+        #endregion        
     }
 }
